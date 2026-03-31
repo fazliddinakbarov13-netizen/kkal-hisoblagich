@@ -1,0 +1,39 @@
+﻿Requirement already satisfied: python-telegram-bot==22.7 in c:\users\asus\appdata\local\programs\python\python314\lib\site-packages (from python-telegram-bot[http2]==22.7) (22.7)
+Requirement already satisfied: httpcore>=1.0.9 in c:\users\asus\appdata\local\programs\python\python314\lib\site-packages (from python-telegram-bot==22.7->python-telegram-bot[http2]==22.7) (1.0.9)
+Requirement already satisfied: httpx<0.29,>=0.27 in c:\users\asus\appdata\local\programs\python\python314\lib\site-packages (from python-telegram-bot==22.7->python-telegram-bot[http2]==22.7) (0.28.1)
+Requirement already satisfied: anyio in c:\users\asus\appdata\local\programs\python\python314\lib\site-packages (from httpx<0.29,>=0.27->python-telegram-bot==22.7->python-telegram-bot[http2]==22.7) (4.13.0)
+Requirement already satisfied: certifi in c:\users\asus\appdata\local\programs\python\python314\lib\site-packages (from httpx<0.29,>=0.27->python-telegram-bot==22.7->python-telegram-bot[http2]==22.7) (2026.2.25)
+Requirement already satisfied: idna in c:\users\asus\appdata\local\programs\python\python314\lib\site-packages (from httpx<0.29,>=0.27->python-telegram-bot==22.7->python-telegram-bot[http2]==22.7) (3.11)
+Requirement already satisfied: h11>=0.16 in c:\users\asus\appdata\local\programs\python\python314\lib\site-packages (from httpcore>=1.0.9->python-telegram-bot==22.7->python-telegram-bot[http2]==22.7) (0.16.0)
+Collecting h2<5,>=3 (from httpx[http2]; extra == "http2"->python-telegram-bot[http2]==22.7)
+  Downloading h2-4.3.0-py3-none-any.whl.metadata (5.1 kB)
+Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx[http2]; extra == "http2"->python-telegram-bot[http2]==22.7)
+  Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+Collecting hpack<5,>=4.1 (from h2<5,>=3->httpx[http2]; extra == "http2"->python-telegram-bot[http2]==22.7)
+  Downloading hpack-4.1.0-py3-none-any.whl.metadata (4.6 kB)
+Downloading h2-4.3.0-py3-none-any.whl (61 kB)
+Downloading hpack-4.1.0-py3-none-any.whl (34 kB)
+Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+Installing collected packages: hyperframe, hpack, h2
+
+Successfully installed h2-4.3.0 hpack-4.1.0 hyperframe-6.1.0
+pip : 
+строка:1 знак:1
++ pip install "python-teleg
+ram-bot[http2]==22.7" 2>&1 
+| Out-File -Encod ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (:St  
+  ring) [], RemoteExcept   
+ ion
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+[notice] A new release of p
+ip is available: 25.3 -> 26
+.0.1
+[notice] To update, run: py
+thon.exe -m pip install --u
+pgrade pip

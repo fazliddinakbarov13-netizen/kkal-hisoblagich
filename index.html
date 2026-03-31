@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaloriya Hisoblagich</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f1117;--card:#1a1d27;--card2:#232734;--accent:#00d4aa;--accent2:#00b894;--accent-glow:rgba(0,212,170,.15);--text:#e8e8e8;--text2:#8b8fa3;--danger:#ff6b6b;--warn:#ffa502;--blue:#4facfe;--purple:#a855f7;--radius:16px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:100px}
+.container{max-width:480px;margin:0 auto;padding:16px}
+
+/* Header */
+.header{text-align:center;padding:24px 0 16px}
+.header h1{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header p{color:var(--text2);font-size:.85rem;margin-top:4px}
+
+/* Cards */
+.card{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);transition:all .3s}
+.card:hover{border-color:rgba(0,212,170,.15)}
+.card-title{font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text2);margin-bottom:12px;font-weight:600}
+
+/* Progress Ring */
+.progress-section{display:flex;align-items:center;gap:24px}
+.ring-wrap{position:relative;width:130px;height:130px;flex-shrink:0}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--card2);stroke-width:10}
+.ring-fill{fill:none;stroke:url(#grad1);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .8s ease}
+.ring-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-val{font-size:1.8rem;font-weight:800;color:var(--accent)}
+.ring-label{font-size:.65rem;color:var(--text2);margin-top:2px}
+
+.macros{flex:1;display:flex;flex-direction:column;gap:10px}
+.macro-item{display:flex;align-items:center;gap:10px}
+.macro-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.macro-info{flex:1}
+.macro-name{font-size:.75rem;color:var(--text2)}
+.macro-bar{height:4px;background:var(--card2);border-radius:4px;margin-top:4px;overflow:hidden}
+.macro-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+.macro-val{font-size:.8rem;font-weight:600;white-space:nowrap}
+
+/* Goal Setup */
+.goal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.goal-input{display:flex;flex-direction:column;gap:4px}
+.goal-input label{font-size:.7rem;color:var(--text2);font-weight:500}
+.goal-input input,.goal-input select{background:var(--card2);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;color:var(--text);font-size:.85rem;font-family:inherit;outline:none;transition:border .3s}
+.goal-input input:focus,.goal-input select:focus{border-color:var(--accent)}
+select option{background:var(--card2)}
+.btn{width:100%;padding:12px;border:none;border-radius:12px;font-family:inherit;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .3s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--blue));color:#fff;margin-top:10px}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(0,212,170,.3)}
+
+/* Search */
+.search-wrap{position:relative;margin-bottom:10px}
+.search-wrap input{width:100%;background:var(--card2);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px 12px 42px;color:var(--text);font-size:.9rem;font-family:inherit;outline:none;transition:border .3s}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:1rem}
+
+/* Food List */
+.food-list{max-height:300px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--card2) transparent}
+.food-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--card2);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:all .2s;border:1px solid transparent}
+.food-item:hover{border-color:var(--accent);transform:translateX(4px)}
+.food-item:active{transform:scale(.98)}
+.fi-info h4{font-size:.85rem;font-weight:500}
+.fi-info span{font-size:.7rem;color:var(--text2)}
+.fi-kcal{font-size:.9rem;font-weight:700;color:var(--accent);white-space:nowrap}
+
+/* Eaten list */
+.eaten-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card2);border-radius:10px;margin-bottom:6px;animation:slideIn .3s ease}
+.eaten-item .ei-name{font-size:.82rem;font-weight:500;flex:1}
+.eaten-item .ei-kcal{font-size:.82rem;font-weight:600;color:var(--accent);margin:0 10px}
+.eaten-item .ei-del{background:none;border:none;color:var(--danger);cursor:pointer;font-size:1.1rem;padding:4px;border-radius:6px;transition:background .2s}
+.eaten-item .ei-del:hover{background:rgba(255,107,107,.15)}
+
+/* Gram modal */
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border-radius:20px;padding:28px;width:100%;max-width:360px;text-align:center;border:1px solid rgba(255,255,255,.08);animation:popIn .3s ease}
+.modal h3{font-size:1.1rem;margin-bottom:4px}
+.modal p{font-size:.8rem;color:var(--text2);margin-bottom:16px}
+.modal input{width:100%;background:var(--card2);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;color:var(--text);font-size:1.2rem;text-align:center;font-family:inherit;font-weight:600;outline:none;margin-bottom:14px}
+.modal input:focus{border-color:var(--accent)}
+.modal-preview{display:flex;justify-content:center;gap:16px;margin-bottom:16px}
+.modal-preview div{text-align:center}
+.modal-preview .mp-val{font-size:1rem;font-weight:700}
+.modal-preview .mp-label{font-size:.65rem;color:var(--text2)}
+.modal-btns{display:flex;gap:8px}
+.modal-btns .btn{flex:1;padding:12px}
+.btn-ghost{background:var(--card2);color:var(--text)}
+
+/* Tabs */
+.tabs{position:fixed;bottom:0;left:0;width:100%;background:var(--card);border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:center;z-index:50;padding:8px 0 env(safe-area-inset-bottom,8px)}
+.tab{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px;cursor:pointer;color:var(--text2);transition:color .2s;background:none;border:none;font-family:inherit}
+.tab.active{color:var(--accent)}
+.tab svg{width:22px;height:22px}
+.tab span{font-size:.65rem;font-weight:500}
+
+/* Pages */
+.page{display:none}
+.page.active{display:block}
+
+/* Empty state */
+.empty{text-align:center;padding:40px 20px;color:var(--text2)}
+.empty svg{width:48px;height:48px;margin-bottom:12px;opacity:.4}
+.empty p{font-size:.85rem}
+
+/* Animations */
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--card2);border-radius:4px}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🔥 Kaloriya Hisoblagich</h1>
+    <p>Kunlik ovqatlanish nazorati</p>
+  </div>
+
+  <!-- PAGE: Dashboard -->
+  <div class="page active" id="pageDash">
+    <div class="card">
+      <div class="card-title">Bugungi natija</div>
+      <div class="progress-section">
+        <div class="ring-wrap">
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00d4aa"/><stop offset="100%" style="stop-color:#4facfe"/></linearGradient></defs>
+            <circle class="ring-bg" cx="65" cy="65" r="55"/>
+            <circle class="ring-fill" id="ringFill" cx="65" cy="65" r="55" stroke-dasharray="345.57" stroke-dashoffset="345.57"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-val" id="eatenKcal">0</div>
+            <div class="ring-label">kkal</div>
+          </div>
+        </div>
+        <div class="macros">
+          <div class="macro-item">
+            <div class="macro-dot" style="background:#00d4aa"></div>
+            <div class="macro-info"><div class="macro-name">Oqsil</div><div class="macro-bar"><div class="macro-bar-fill" id="barP" style="width:0%;background:#00d4aa"></div></div></div>
+            <div class="macro-val" id="valP">0g</div>
+          </div>
+          <div class="macro-item">
+            <div class="macro-dot" style="background:#ffa502"></div>
+            <div class="macro-info"><div class="macro-name">Yog'</div><div class="macro-bar"><div class="macro-bar-fill" id="barF" style="width:0%;background:#ffa502"></div></div></div>
+            <div class="macro-val" id="valF">0g</div>
+          </div>
+          <div class="macro-item">
+            <div class="macro-dot" style="background:#4facfe"></div>
+            <div class="macro-info"><div class="macro-name">Uglevod</div><div class="macro-bar"><div class="macro-bar-fill" id="barC" style="width:0%;background:#4facfe"></div></div></div>
+            <div class="macro-val" id="valC">0g</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:14px;font-size:.78rem;color:var(--text2)">
+        Maqsad: <strong id="goalDisplay" style="color:var(--accent)">2000</strong> kkal
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Iste'mol qilingan ovqatlar</div>
+      <div id="eatenList"></div>
+      <div class="empty" id="eatenEmpty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <p>Hali hech narsa qo'shilmagan.<br>Ovqat qo'shish uchun 🍽 bo'limiga o'ting.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: Add Food -->
+  <div class="page" id="pageFood">
+    <div class="card">
+      <div class="card-title">Ovqat qo'shish</div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Ovqat nomini kiriting..." oninput="filterFoods()">
+      </div>
+      <div class="food-list" id="foodList"></div>
+    </div>
+  </div>
+
+  <!-- PAGE: Settings -->
+  <div class="page" id="pageSettings">
+    <div class="card">
+      <div class="card-title">Kunlik maqsad</div>
+      <div class="goal-grid">
+        <div class="goal-input"><label>Jinsingiz</label>
+          <select id="gender"><option value="male">Erkak</option><option value="female">Ayol</option></select>
+        </div>
+        <div class="goal-input"><label>Yoshingiz</label><input type="number" id="age" value="25" min="10" max="100"></div>
+        <div class="goal-input"><label>Bo'yingiz (sm)</label><input type="number" id="height" value="175" min="100" max="250"></div>
+        <div class="goal-input"><label>Vazningiz (kg)</label><input type="number" id="weight" value="70" min="30" max="300"></div>
+      </div>
+      <div class="goal-input" style="margin-top:10px"><label>Faollik darajasi</label>
+        <select id="activity">
+          <option value="1.2">Kam harakatli</option>
+          <option value="1.375">Yengil (haftada 1-3)</option>
+          <option value="1.55" selected>O'rtacha (haftada 3-5)</option>
+          <option value="1.725">Yuqori (haftada 6-7)</option>
+          <option value="1.9">Juda yuqori</option>
+        </select>
+      </div>
+      <div class="goal-input" style="margin-top:10px"><label>Maqsadingiz</label>
+        <select id="goalType">
+          <option value="-500">Vazn yo'qotish (-500 kkal)</option>
+          <option value="0" selected>Vaznni saqlash</option>
+          <option value="500">Vazn olish (+500 kkal)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="calcGoal()">Hisoblash</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Ma'lumotlar</div>
+      <button class="btn btn-primary" style="background:var(--danger)" onclick="clearAll()">🗑 Bugungi ma'lumotlarni tozalash</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('pageDash',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Asosiy</span>
+  </button>
+  <button class="tab" onclick="switchTab('pageFood',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+    <span>Ovqat</span>
+  </button>
+  <button class="tab" onclick="switchTab('pageSettings',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    <span>Sozlama</span>
+  </button>
+</div>
+
+<!-- Gram Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modalName">Ovqat</h3>
+    <p id="modalInfo">100g = 0 kkal</p>
+    <input type="number" id="gramInput" placeholder="Gramm" value="100" min="1" max="5000">
+    <div class="modal-preview">
+      <div><div class="mp-val" id="mpKcal">0</div><div class="mp-label">kkal</div></div>
+      <div><div class="mp-val" id="mpP">0g</div><div class="mp-label">Oqsil</div></div>
+      <div><div class="mp-val" id="mpF">0g</div><div class="mp-label">Yog'</div></div>
+      <div><div class="mp-val" id="mpC">0g</div><div class="mp-label">Uglevod</div></div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal()">Bekor</button>
+      <button class="btn btn-primary" onclick="addFood()">Qo'shish</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// === FOOD DATABASE (per 100g) ===
+const DB=[
+{n:"Guruch (pishgan)",k:130,p:2.7,f:0.3,c:28},
+{n:"Makaron (pishgan)",k:131,p:5,f:1.1,c:25},
+{n:"Non (oq)",k:265,p:9,f:3.2,c:49},
+{n:"Osh (palov)",k:210,p:7,f:9,c:26},
+{n:"Tovuq ko'kragi",k:165,p:31,f:3.6,c:0},
+{n:"Mol go'shti",k:250,p:26,f:15,c:0},
+{n:"Qo'y go'shti",k:294,p:25,f:21,c:0},
+{n:"Baliq (sudak)",k:84,p:18,f:1.1,c:0},
+{n:"Tuxum (1 dona ≈50g)",k:155,p:13,f:11,c:1.1},
+{n:"Sut (3.2%)",k:60,p:3,f:3.2,c:4.7},
+{n:"Qatiq",k:56,p:3,f:2.5,c:5},
+{n:"Tvorog",k:121,p:16,f:5,c:3},
+{n:"Pishloq",k:350,p:25,f:27,c:1},
+{n:"Sariyog'",k:717,p:0.9,f:81,c:0.1},
+{n:"O'simlik yog'i",k:884,p:0,f:100,c:0},
+{n:"Olma",k:52,p:0.3,f:0.2,c:14},
+{n:"Banan",k:89,p:1.1,f:0.3,c:23},
+{n:"Apelsin",k:47,p:0.9,f:0.1,c:12},
+{n:"Uzum",k:69,p:0.7,f:0.2,c:18},
+{n:"Pomidor",k:18,p:0.9,f:0.2,c:3.9},
+{n:"Bodring",k:16,p:0.7,f:0.1,c:3.6},
+{n:"Kartoshka (pishgan)",k:87,p:1.9,f:0.1,c:20},
+{n:"Sabzi",k:41,p:0.9,f:0.2,c:10},
+{n:"Karam",k:25,p:1.3,f:0.1,c:6},
+{n:"Piyoz",k:40,p:1.1,f:0.1,c:9},
+{n:"Somsa",k:260,p:10,f:14,c:24},
+{n:"Manti",k:220,p:11,f:10,c:22},
+{n:"Lag'mon",k:130,p:6,f:4,c:18},
+{n:"Shashlik",k:280,p:22,f:20,c:2},
+{n:"Chuchvara",k:200,p:9,f:8,c:24},
+{n:"Shokolad",k:546,p:5,f:31,c:60},
+{n:"Pechenye",k:450,p:6,f:18,c:65},
+{n:"Asal",k:304,p:0.3,f:0,c:82},
+{n:"Shakar",k:387,p:0,f:0,c:100},
+{n:"Yong'oq",k:654,p:15,f:65,c:14},
+{n:"Choy (shakarsiz)",k:1,p:0,f:0,c:0.3},
+{n:"Coca-Cola",k:42,p:0,f:0,c:11},
+{n:"Lavash",k:275,p:9,f:1.2,c:56},
+{n:"No'xat",k:164,p:9,f:2.6,c:27},
+{n:"Loviya",k:127,p:8.7,f:0.5,c:22},
+{n:"Sumalak",k:220,p:4,f:1.5,c:48}
+];
+
+let goal=2000, eaten=[], selectedFood=null;
+
+// Load from localStorage
+function loadData(){
+  const today=new Date().toDateString();
+  const saved=localStorage.getItem('kcal_data');
+  if(saved){
+    const d=JSON.parse(saved);
+    if(d.date===today){eaten=d.eaten||[];}
+    else{eaten=[];saveData();}
+  }
+  const g=localStorage.getItem('kcal_goal');
+  if(g)goal=parseInt(g);
+  document.getElementById('goalDisplay').textContent=goal;
+}
+
+function saveData(){
+  localStorage.setItem('kcal_data',JSON.stringify({date:new Date().toDateString(),eaten}));
+}
+
+// Update dashboard
+function updateDash(){
+  let tk=0,tp=0,tf=0,tc=0;
+  eaten.forEach(e=>{tk+=e.k;tp+=e.p;tf+=e.f;tc+=e.c;});
+  document.getElementById('eatenKcal').textContent=Math.round(tk);
+  const pct=Math.min(tk/goal,1);
+  const circ=345.57;
+  document.getElementById('ringFill').style.strokeDashoffset=circ-(circ*pct);
+  // Macros targets (rough): P=goal*0.3/4, F=goal*0.25/9, C=goal*0.45/4
+  const tpg=goal*0.3/4, tfg=goal*0.25/9, tcg=goal*0.45/4;
+  document.getElementById('barP').style.width=Math.min(tp/tpg*100,100)+'%';
+  document.getElementById('barF').style.width=Math.min(tf/tfg*100,100)+'%';
+  document.getElementById('barC').style.width=Math.min(tc/tcg*100,100)+'%';
+  document.getElementById('valP').textContent=Math.round(tp)+'g';
+  document.getElementById('valF').textContent=Math.round(tf)+'g';
+  document.getElementById('valC').textContent=Math.round(tc)+'g';
+  document.getElementById('goalDisplay').textContent=goal;
+
+  // Eaten list
+  const el=document.getElementById('eatenList');
+  const empty=document.getElementById('eatenEmpty');
+  if(eaten.length===0){el.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  el.innerHTML=eaten.map((e,i)=>`<div class="eaten-item"><span class="ei-name">${e.n} (${e.g}g)</span><span class="ei-kcal">${Math.round(e.k)} kkal</span><button class="ei-del" onclick="removeFood(${i})">✕</button></div>`).join('');
+}
+
+function removeFood(i){eaten.splice(i,1);saveData();updateDash();}
+function clearAll(){if(confirm('Barcha ma\'lumotlarni o\'chirasizmi?')){eaten=[];saveData();updateDash();}}
+
+// Food list
+function renderFoods(list){
+  document.getElementById('foodList').innerHTML=list.map((f,i)=>`<div class="food-item" onclick="openModal(${DB.indexOf(f)})"><div class="fi-info"><h4>${f.n}</h4><span>O:${f.p}g · Y:${f.f}g · U:${f.c}g</span></div><div class="fi-kcal">${f.k} kkal</div></div>`).join('');
+}
+function filterFoods(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  renderFoods(q?DB.filter(f=>f.n.toLowerCase().includes(q)):DB);
+}
+
+// Modal
+function openModal(idx){
+  selectedFood=DB[idx];
+  document.getElementById('modalName').textContent=selectedFood.n;
+  document.getElementById('modalInfo').textContent=`100g = ${selectedFood.k} kkal`;
+  document.getElementById('gramInput').value=100;
+  updatePreview();
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('gramInput').focus();
+}
+function closeModal(){document.getElementById('modal').classList.remove('show');selectedFood=null;}
+function updatePreview(){
+  if(!selectedFood)return;
+  const g=parseFloat(document.getElementById('gramInput').value)||0;
+  const m=g/100;
+  document.getElementById('mpKcal').textContent=Math.round(selectedFood.k*m);
+  document.getElementById('mpP').textContent=Math.round(selectedFood.p*m)+'g';
+  document.getElementById('mpF').textContent=Math.round(selectedFood.f*m)+'g';
+  document.getElementById('mpC').textContent=Math.round(selectedFood.c*m)+'g';
+}
+document.getElementById('gramInput').addEventListener('input',updatePreview);
+
+function addFood(){
+  if(!selectedFood)return;
+  const g=parseFloat(document.getElementById('gramInput').value)||0;
+  if(g<=0)return;
+  const m=g/100;
+  eaten.push({n:selectedFood.n,g:Math.round(g),k:selectedFood.k*m,p:selectedFood.p*m,f:selectedFood.f*m,c:selectedFood.c*m});
+  saveData();updateDash();closeModal();switchTab('pageDash',document.querySelectorAll('.tab')[0]);
+}
+
+// Goal calc (Mifflin-St Jeor)
+function calcGoal(){
+  const gen=document.getElementById('gender').value;
+  const age=parseInt(document.getElementById('age').value)||25;
+  const h=parseInt(document.getElementById('height').value)||175;
+  const w=parseInt(document.getElementById('weight').value)||70;
+  const act=parseFloat(document.getElementById('activity').value);
+  const adj=parseInt(document.getElementById('goalType').value);
+  let bmr=10*w+6.25*h-5*age;
+  bmr+=gen==='male'?5:-161;
+  goal=Math.round(bmr*act+adj);
+  localStorage.setItem('kcal_goal',goal);
+  updateDash();
+  alert(`Sizning kunlik norma: ${goal} kkal`);
+}
+
+// Tab switch
+function switchTab(pageId,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Init
+loadData();renderFoods(DB);updateDash();
+</script>
+</body>
+</html>

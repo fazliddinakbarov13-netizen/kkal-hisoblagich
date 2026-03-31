@@ -1,0 +1,417 @@
+﻿python : Traceback (most re
+cent call last):
+строка:1 знак:32
++ ... NG='utf-8'; python -c
+ "import nest_asyncio; nest
+_asyncio.apply(); fro ...
++                 ~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (Tra  
+  ceback (most recent ca   
+ ll last)::String) [],     
+RemoteException
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_async\connection_p
+ool.py", line 228, in handl
+e_async_request
+    closing = self._assign_
+requests_to_connections()
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_async\connection_p
+ool.py", line 328, in _assi
+gn_requests_to_connections
+    pool_request.assign_to_
+connection(connection)
+    ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_async\connection_p
+ool.py", line 25, in assign
+_to_connection
+    self._connection_acquir
+ed.set()
+    ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_synchronization.py
+", line 130, in set
+    self.setup()
+    ~~~~~~~~~~^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_synchronization.py
+", line 122, in setup
+    self._backend = current
+_async_library()
+                    ~~~~~~~
+~~~~~~~~~~~~~~^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_synchronization.py
+", line 30, in current_asyn
+c_library
+    environment = sniffio.c
+urrent_async_library()
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\s
+niffio\_impl.py", line 93, 
+in current_async_library
+    raise AsyncLibraryNotFo
+undError(
+        "unknown async libr
+ary, or not in async contex
+t"
+    )
+sniffio._impl.AsyncLibraryN
+otFoundError: unknown async
+ library, or not in async c
+ontext
+
+During handling of the abov
+e exception, another except
+ion occurred:
+
+Traceback (most recent call
+ last):
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\request\_basereques
+t.py", line 333, in _reques
+t_wrapper
+    code, payload = await s
+elf.do_request(
+                    ^^^^^^^
+^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\request\_httpxreque
+st.py", line 292, in do_req
+uest
+    res = await self._clien
+t.request(
+          ^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpx\_client.py", line 1540
+, in request
+    return await self.send(
+request, auth=auth, follow_
+redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpx\_client.py", line 1629
+, in send
+    response = await self._
+send_handling_auth(
+               ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpx\_client.py", line 1657
+, in _send_handling_auth
+    response = await self._
+send_handling_redirects(
+               ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpx\_client.py", line 1694
+, in _send_handling_redirec
+ts
+    response = await self._
+send_single_request(request
+)
+               ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpx\_client.py", line 1730
+, in _send_single_request
+    response = await transp
+ort.handle_async_request(re
+quest)
+               ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpx\_transports\default.py
+", line 394, in handle_asyn
+c_request
+    resp = await self._pool
+.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_async\connection_p
+ool.py", line 255, in handl
+e_async_request
+    await self._close_conne
+ctions(closing)
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_async\connection_p
+ool.py", line 343, in _clos
+e_connections
+    with AsyncShieldCancell
+ation():
+         ~~~~~~~~~~~~~~~~~~
+~~~~~^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_synchronization.py
+", line 203, in __init__
+    self._backend = current
+_async_library()
+                    ~~~~~~~
+~~~~~~~~~~~~~~^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\h
+ttpcore\_synchronization.py
+", line 30, in current_asyn
+c_library
+    environment = sniffio.c
+urrent_async_library()
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\s
+niffio\_impl.py", line 93, 
+in current_async_library
+    raise AsyncLibraryNotFo
+undError(
+        "unknown async libr
+ary, or not in async contex
+t"
+    )
+sniffio._impl.AsyncLibraryN
+otFoundError: unknown async
+ library, or not in async c
+ontext
+
+The above exception was the
+ direct cause of the follow
+ing exception:
+
+Traceback (most recent call
+ last):
+  File "<string>", line 1, 
+in <module>
+    import nest_asyncio; ne
+st_asyncio.apply(); from te
+legram.ext import Applicati
+on; app = Application.build
+er().token('8512598853:AAEJ
+_3-WjR26vwMCISZIylZe1l-RPrB
+PeXo').build(); app.run_pol
+ling(drop_pending_updates=T
+rue, stop_signals=None)
+                           
+                           
+                           
+                           
+                           
+                           
+                ~~~~~~~~~~~
+~~~~^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_application.py
+", line 881, in run_polling
+    return self.__run(
+           ~~~~~~~~~~^
+        updater_coroutine=s
+elf.updater.start_polling(
+        ^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        stop_signals=stop_s
+ignals,
+        ^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_application.py
+", line 1079, in __run
+    loop.run_until_complete
+(self.initialize())
+    ~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\n
+est_asyncio.py", line 98, i
+n run_until_complete
+    return f.result()
+           ~~~~~~~~^^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\asyncio\futures
+.py", line 208, in result
+    raise self._exception.w
+ith_traceback(self._excepti
+on_tb)
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\asyncio\tasks.p
+y", line 289, in __step_run
+_and_handle_result
+    result = coro.send(None
+)
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_application.py
+", line 503, in initialize
+    await self.bot.initiali
+ze()
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_extbot.py", li
+ne 301, in initialize
+    await super().initializ
+e()
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\_bot.py", line 777,
+ in initialize
+    await self.get_me()
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_extbot.py", li
+ne 1920, in get_me
+    return await super().ge
+t_me(
+           ^^^^^^^^^^^^^^^^
+^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\_bot.py", line 909,
+ in get_me
+    result = await self._po
+st(
+             ^^^^^^^^^^^^^^
+^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\_bot.py", line 623,
+ in _post
+    return await self._do_p
+ost(
+           ^^^^^^^^^^^^^^^^
+^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_extbot.py", li
+ne 355, in _do_post
+    return await super()._d
+o_post(
+           ^^^^^^^^^^^^^^^^
+^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\_bot.py", line 652,
+ in _do_post
+    result = await request.
+post(
+             ^^^^^^^^^^^^^^
+^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\request\_basereques
+t.py", line 201, in post
+    result = await self._re
+quest_wrapper(
+             ^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\request\_basereques
+t.py", line 345, in _reques
+t_wrapper
+    raise NetworkError(f"Un
+known error in HTTP impleme
+ntation: {exc!r}") from exc
+telegram.error.NetworkError
+: Unknown error in HTTP imp
+lementation: AsyncLibraryNo
+tFoundError('unknown async 
+library, or not in async co
+ntext')

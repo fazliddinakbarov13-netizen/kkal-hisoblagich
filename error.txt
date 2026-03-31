@@ -1,0 +1,82 @@
+﻿python : <string>:1: Resour
+ceWarning: unclosed file <_
+io.TextIOWrapper name='bot.
+py' mode='r' encoding='utf-
+8'>
+строка:1 знак:32
++ ... NG='utf-8'; python -W
+ all -c "exec(open('bot.py'
+, encoding='utf-8').r ...
++                 ~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (<st  
+  ring>:1: Res...coding=   
+ 'utf-8'>:String) [], R    
+emoteException
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+ResourceWarning: Enable tra
+cemalloc to get the object 
+allocation traceback
+Traceback (most recent call
+ last):
+  File "<string>", line 1, 
+in <module>
+    exec(open('bot.py', enc
+oding='utf-8').read())
+    ~~~~^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 346
+, in <module>
+  File "<string>", line 343
+, in main
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_application.py
+", line 881, in run_polling
+    return self.__run(
+           ~~~~~~~~~~^
+        updater_coroutine=s
+elf.updater.start_polling(
+        ^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        stop_signals=stop_s
+ignals,
+        ^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+    )
+    ^
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\site-packages\t
+elegram\ext\_application.py
+", line 1061, in __run
+    loop = asyncio.get_even
+t_loop()
+  File "C:\Users\ASUS\AppDa
+ta\Local\Programs\Python\Py
+thon314\Lib\asyncio\events.
+py", line 715, in get_event
+_loop
+    raise RuntimeError('The
+re is no current event loop
+ in thread %r.'
+                       % th
+reading.current_thread().na
+me)
+RuntimeError: There is no c
+urrent event loop in thread
+ 'MainThread'.
+Kaloriya Hisoblagich Bot ishga tushmoqda...
+Bot tayyor! Telegram'da /start buyrug'ini yuboring.
+<sys>:0: RuntimeWarning: co
+routine 'Updater.start_poll
+ing' was never awaited
+RuntimeWarning: Enable trac
+emalloc to get the object a
+llocation traceback
